@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import musicMp3 from '../assets/music.mp3';
 
 const MusicPlayer = () => {
     const audioRef = useRef(null);
@@ -25,7 +26,7 @@ const MusicPlayer = () => {
 
     return (
         <audio ref={audioRef} loop>
-            <source src="../../public/music.mp3" type="audio/mpeg" />
+            <source src={musicMp3} type="audio/mpeg" />
         </audio>
     );
 };

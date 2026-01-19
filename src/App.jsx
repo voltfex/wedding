@@ -9,6 +9,13 @@ import Vecotr from './assets/text-image/Vector_1.svg'
 import Dress from './assets/text-image/dress.svg'
 import Detail from './assets/text-image/details.svg'
 import Anketa from './assets/text-image/anketa.svg'
+import HeartWebp from './assets/heart.webp';
+import Dress1 from './assets/dress/1.webp';
+import Dress2 from './assets/dress/2.webp';
+import Dress3 from './assets/dress/3.webp';
+import Dress4 from './assets/dress/4.webp';
+import Dress5 from './assets/dress/5.webp';
+import Dress6 from './assets/dress/6.webp';
 import './App.css';
 import MusicPlayer from "./components/MusicPlayer.tsx";
 
@@ -135,10 +142,10 @@ function App() {
                         </div>
 
                         <div className="grid grid-cols-3 gap-2 w-full pt-4">
-                            {[1, 2, 3, 4, 5, 6].map(num => (
+                            {[Dress1, Dress2, Dress3, Dress4, Dress5, Dress6].map((dressImg, idx) => (
                                 <img
-                                    key={num}
-                                    src={`../public/dress/${num}.webp`}
+                                    key={idx + 1}
+                                    src={dressImg}
                                     alt=""
                                     className="w-full aspect-3/4 object-cover rounded-sm shadow-sm"
                                 />
@@ -161,7 +168,7 @@ function App() {
 
                         {/* Декоративное сердечко со стрелой (если есть картинка, замени Heart на неё) */}
                         <div className="py-2 opacity-60">
-                            <img src='../public/heart.webp' alt="❤️" className="w-10 h-auto"/>
+                            <img src={HeartWebp} alt="❤️" className="w-10 h-auto"/>
                         </div>
 
                         {/* Второй текстовый блок (про вино) */}
