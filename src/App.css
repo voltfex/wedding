@@ -1,0 +1,22 @@
+.papers {
+    position: relative;
+    width: fit-content;
+}
+
+.paper {
+    width: 200px;
+    transition: transform 1s ease;
+    position: relative;
+    z-index: 1;
+}
+
+/* анимация для раздвигания */
+.open-left {
+    transform: translateX(-1000px) rotate(-5deg);
+    z-index: 0;
+}
+
+.open-right {
+    transform: translateX(1000px) rotate(5deg);
+    z-index: 0;
+}

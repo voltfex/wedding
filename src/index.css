@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  background: #FCF7EE;
+  font-family: "Shantell Sans", cursive;
+  color: #363636;
+  font-size: 14px;
+}
+
