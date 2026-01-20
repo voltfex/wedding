@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
+import {motion} from 'framer-motion'; // 1. Импортируем motion
 import Dear from './assets/text-image/Group_61-2.svg';
 import WeMarried from './assets/text-image/weMarried.svg';
 import Paper1 from './assets/text-image/Paper1.png';
@@ -18,6 +19,15 @@ import Dress5 from './assets/dress/5.webp';
 import Dress6 from './assets/dress/6.webp';
 import './App.css';
 import MusicPlayer from "./components/MusicPlayer.tsx";
+
+const fadeInUp = {
+    hidden: {opacity: 0, y: 30},
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {duration: 0.8, ease: "easeOut"}
+    }
+};
 
 function App() {
     const papersRef = useRef(null);
@@ -45,12 +55,18 @@ function App() {
 
     return (
         <div className="flex justify-center min-h-screen bg-[#FCF7EE] overflow-hidden text-[#464040]">
-            <MusicPlayer />
+            <MusicPlayer/>
             <div className="max-w-[360px] w-full py-10 px-4">
-                <div className="flex flex-col space-y-14 text-center items-center">
+                <div className="flex flex-col space-y-20 text-center items-center">
 
                     {/* Блок приветствия */}
-                    <div className="space-y-6 flex flex-col items-center">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{once: true}}
+                        variants={fadeInUp}
+                        className="space-y-6 flex flex-col items-center"
+                    >
                         <p className="text-lg uppercase tracking-widest">Вы дождались...</p>
                         <img src={WeMarried} alt="Мы женимся!" className="w-full"/>
                         <img src={Dear} alt="Дорогие наши гости" className="w-3/4"/>
@@ -59,17 +75,24 @@ function App() {
                             с нами одно из важных событий —
                         </p>
                         <h3 className="text-[#820100] text-3xl font-serif">НАШУ СВАДЬБУ</h3>
-                    </div>
+                    </motion.div>
 
-                    {/* Блок с календарем (Papers) */}
-                    <div ref={papersRef} className="papers flex justify-center gap-2 relative">
+                    {/* Блок с календарем (Оставляем твою логику скролла, но оборачиваем в motion для появления) */}
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{once: true, margin: "-100px"}}
+                        variants={fadeInUp}
+                        ref={papersRef}
+                        className="papers flex justify-center gap-2 relative"
+                    >
                         <img
                             src={Paper1}
                             alt=""
                             className="paper"
                             style={{
                                 transform: `translateX(${leftTransform}px)`,
-                                transition: 'transform 0.2s linear',
+                                transition: 'transform 0.4s ease-out', // Сделал чуть плавнее
                             }}
                         />
                         <div className='absolute top-[50%]'>
@@ -91,24 +114,36 @@ function App() {
                             className="paper"
                             style={{
                                 transform: `translateX(${rightTransform}px)`,
-                                transition: 'transform 0.2s linear',
+                                transition: 'transform 0.4s ease-out',
                             }}
                         />
-                    </div>
+                    </motion.div>
+
                     {/* Блок места проведения */}
-                    <div className="space-y-2">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{once: true}}
+                        variants={fadeInUp}
+                        className="space-y-2"
+                    >
                         <p className="text-base">Праздник пройдет в ресторане</p>
                         <p className="text-xl font-semibold">'Sher Hof'</p>
                         <p className="text-sm opacity-80">Адрес: г. Азов, пляжный проезд 18</p>
-                    </div>
+                    </motion.div>
 
                     {/* Программа дня */}
-                    <div className='flex flex-col items-center w-full'>
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{once: true}}
+                        variants={fadeInUp}
+                        className='flex flex-col items-center w-full'
+                    >
                         <img className='w-[200px] mb-8' src={Programm} alt="Программа дня"/>
                         <div className='relative w-full h-[350px]'>
                             <img className='absolute left-1/2 -translate-x-1/2 h-full' src={Vecotr} alt="vector"/>
 
-                            {/* Точки программы с фиксированным позиционированием */}
                             <div className='absolute top-0 left-[20%] text-left'>
                                 <p className="font-bold">16:00</p>
                                 <p className="text-sm">Сбор гостей</p>
@@ -126,79 +161,91 @@ function App() {
                                 <p className="text-sm">Окончание вечера</p>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Дресс-код */}
-                    <div className="space-y-8 w-full flex flex-col items-center">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{once: true}}
+                        variants={fadeInUp}
+                        className="space-y-8 w-full flex flex-col items-center"
+                    >
                         <img className='w-[200px]' src={Dress} alt="Dress Code"/>
                         <p className="text-base px-4">Поддержите нас красивыми нарядами в палитре торжества:</p>
 
                         <div className='flex -space-x-4 justify-center'>
-                            <div className='bg-[#464040] w-16 h-16 rounded-full ring-4 ring-white shadow-sm'></div>
-                            <div className='bg-[#E0CDBB] w-16 h-16 rounded-full ring-4 ring-white shadow-sm'></div>
-                            <div className='bg-[#BFB7AF] w-16 h-16 rounded-full ring-4 ring-white shadow-sm'></div>
-                            <div className='bg-[#C0D8E8] w-16 h-16 rounded-full ring-4 ring-white shadow-sm'></div>
-                            <div className='bg-[#202539] w-16 h-16 rounded-full ring-4 ring-white shadow-sm'></div>
+                            {['#464040', '#E0CDBB', '#BFB7AF', '#C0D8E8', '#202539'].map((color, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{scale: 0}}
+                                    whileInView={{scale: 1}}
+                                    transition={{delay: i * 0.1}}
+                                    viewport={{once: true}}
+                                    style={{backgroundColor: color}}
+                                    className='w-16 h-16 rounded-full ring-4 ring-white shadow-sm'
+                                />
+                            ))}
                         </div>
 
                         <div className="grid grid-cols-3 gap-2 w-full pt-4">
                             {[Dress1, Dress2, Dress3, Dress4, Dress5, Dress6].map((dressImg, idx) => (
-                                <img
+                                <motion.img
                                     key={idx + 1}
                                     src={dressImg}
-                                    alt=""
+                                    whileHover={{scale: 1.05}}
                                     className="w-full aspect-3/4 object-cover rounded-sm shadow-sm"
                                 />
                             ))}
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Блок Детали */}
-                    <div className="flex flex-col items-center space-y-6 px-2">
-                        {/* Заголовок-картинка "Детали" */}
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{once: true}}
+                        variants={fadeInUp}
+                        className="flex flex-col items-center space-y-6 px-2"
+                    >
                         <img src={Detail} alt='Детали' className="w-[180px] h-auto"/>
-
-                        {/* Первый текстовый блок (про конверты) */}
                         <div className="space-y-1">
                             <p className="text-base leading-snug">
                                 Ваши улыбки и смех подарят нам<br/>
                                 незабываемое счастье в этот день
                             </p>
                         </div>
-
-                        {/* Декоративное сердечко со стрелой (если есть картинка, замени Heart на неё) */}
-                        <div className="py-2 opacity-60">
+                        <motion.div
+                            animate={{scale: [1, 1.2, 1]}}
+                            transition={{repeat: Infinity, duration: 2}}
+                            className="py-2 opacity-60"
+                        >
                             <img src={HeartWebp} alt="❤️" className="w-10 h-auto"/>
-                        </div>
-
-                        {/* Второй текстовый блок (про вино) */}
-                        <p className="text-base leading-relaxed max-w-[300px]">Вместо цветов мы будем рады принять от
-                            вас частичку праздничного настроения в стекле, которое мы разделим с вами при следующей
-                            встрече.</p>
-                    </div>
+                        </motion.div>
+                        <p className="text-base leading-relaxed max-w-[300px]">
+                            Вместо цветов мы будем рады принять от вас частичку праздничного настроения в стекле...
+                        </p>
+                    </motion.div>
 
                     {/* Блок Анкета */}
-                    <div className="flex flex-col items-center space-y-8 w-full px-4 pt-10">
-                        {/* Заголовок из твоего ассета */}
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{once: true}}
+                        variants={fadeInUp}
+                        className="flex flex-col items-center space-y-8 w-full px-4 pt-10"
+                    >
                         <img src={Anketa} alt="Анкета" className="w-[180px] h-auto"/>
-
-                        <p className="text-base leading-relaxed">
-                            Просим вас сообщить, сможете вы быть <br/>
-                            с нами, заполнив форму ниже:
-                        </p>
-
-                        {/* Замени тег <form> на этот */}
                         <form
-                            action="https://formspree.io/f/mojjwnjw" // Сюда вставишь ID, который получишь ниже
+                            action="https://formspree.io/f/mojjwnjw"
                             method="POST"
                             className="w-full space-y-10 text-left"
                         >
-                            {/* Поле Имя */}
                             <div className="space-y-2">
                                 <label className="text-sm font-medium opacity-70 ml-1">Имя и Фамилия</label>
                                 <input
                                     type="text"
-                                    name="Свадьба" // ОБЯЗАТЕЛЬНО: Formspree использует это имя для письма
+                                    name="Name"
                                     required
                                     className="w-full border-b border-[#E0CDBB] bg-transparent py-2 px-1 focus:outline-none focus:border-[#820100] transition-colors"
                                     placeholder="Введите ваше имя"
@@ -244,16 +291,16 @@ function App() {
                             </div>
 
                             <div className="flex justify-center pt-4">
-                                <button
+                                <motion.button
+                                    whileTap={{scale: 0.95}}
                                     type="submit"
                                     className="bg-[#557153] text-white px-12 py-3 rounded-md text-lg hover:bg-[#3d523b] transition-colors shadow-sm"
                                 >
                                     Отправить
-                                </button>
+                                </motion.button>
                             </div>
                         </form>
-                    </div>
-
+                    </motion.div>
                 </div>
             </div>
         </div>
