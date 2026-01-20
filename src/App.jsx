@@ -50,8 +50,8 @@ function App() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const leftTransform = offset < 0.3 ? 10 : Math.min((offset - 0.3) / 0.2, 1) * -100;
-    const rightTransform = offset < 0.3 ? -10 : Math.min((offset - 0.3) / 0.2, 1) * 100;
+    const leftTransform = offset < 0.6 ? 10 : Math.min((offset - 0.3) / 0.2, 1) * -100;
+    const rightTransform = offset < 0.6 ? -10 : Math.min((offset - 0.3) / 0.2, 1) * 100;
 
     return (
         <div className="flex justify-center min-h-screen bg-[#FCF7EE] overflow-hidden text-[#464040]">
