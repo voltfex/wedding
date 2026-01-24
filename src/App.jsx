@@ -17,6 +17,7 @@ import Dress3 from './assets/dress/3.webp';
 import Dress4 from './assets/dress/4.webp';
 import Dress5 from './assets/dress/5.webp';
 import Dress6 from './assets/dress/6.webp';
+import Main from './assets/main.jpg';
 import './App.css';
 import MusicPlayer from "./components/MusicPlayer.tsx";
 
@@ -50,8 +51,8 @@ function App() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const leftTransform = offset < 0.6 ? 10 : Math.min((offset - 0.3) / 0.2, 1) * -100;
-    const rightTransform = offset < 0.6 ? -10 : Math.min((offset - 0.3) / 0.2, 1) * 100;
+    const leftTransform = offset < 0.6 ? 12 : Math.min((offset - 0.3) / 0.2, 1) * -100;
+    const rightTransform = offset < 0.6 ? -12 : Math.min((offset - 0.3) / 0.2, 1) * 100;
 
     return (
         <div className="flex justify-center min-h-screen bg-[#FCF7EE] overflow-hidden text-[#464040]">
@@ -68,8 +69,11 @@ function App() {
                         className="space-y-6 flex flex-col items-center"
                     >
                         <p className="text-lg uppercase tracking-widest">Вы дождались...</p>
-                        <img src={WeMarried} alt="Мы женимся!" className="w-full"/>
-                        <img src={Dear} alt="Дорогие наши гости" className="w-3/4"/>
+                        <div className='flex flex-col items-center justify-center gap-4f'>
+                            <img src={WeMarried} alt="Мы женимся!" className="w-full"/>
+                            <img src={Main} alt="Наше фото" className='pb-6 pt-10'/>
+                        </div>
+                        <img src={Dear} alt="Дорогие наши гости" className="w-full"/>
                         <p className="text-base leading-relaxed">
                             Мы приглашаем вас разделить <br/>
                             с нами одно из важных событий —
@@ -128,7 +132,7 @@ function App() {
                         className="space-y-2"
                     >
                         <p className="text-base">Праздник пройдет в ресторане</p>
-                        <p className="text-xl font-semibold">'Sher Hof'</p>
+                        <p className="text-xl font-medium">'Sher Hof'</p>
                         <p className="text-sm opacity-80">Адрес: г. Азов, пляжный проезд 18</p>
                     </motion.div>
 
@@ -140,7 +144,7 @@ function App() {
                         variants={fadeInUp}
                         className='flex flex-col items-center w-full'
                     >
-                        <img className='w-[200px] mb-8' src={Programm} alt="Программа дня"/>
+                        <img className='w-full mb-8' src={Programm} alt="Программа дня"/>
                         <div className='relative w-full h-[350px]'>
                             <img className='absolute left-1/2 -translate-x-1/2 h-full' src={Vecotr} alt="vector"/>
 
@@ -171,7 +175,7 @@ function App() {
                         variants={fadeInUp}
                         className="space-y-8 w-full flex flex-col items-center"
                     >
-                        <img className='w-[200px]' src={Dress} alt="Dress Code"/>
+                        <img className='w-[250px]' src={Dress} alt="Dress Code"/>
                         <p className="text-base px-4">Поддержите нас красивыми нарядами в палитре торжества:</p>
 
                         <div className='flex -space-x-4 justify-center'>
@@ -208,7 +212,7 @@ function App() {
                         variants={fadeInUp}
                         className="flex flex-col items-center space-y-6 px-2"
                     >
-                        <img src={Detail} alt='Детали' className="w-[180px] h-auto"/>
+                        <img src={Detail} alt='Детали' className="w-[250px] h-auto"/>
                         <div className="space-y-1">
                             <p className="text-base leading-snug">
                                 Ваши улыбки и смех подарят нам<br/>
@@ -235,7 +239,7 @@ function App() {
                         variants={fadeInUp}
                         className="flex flex-col items-center space-y-8 w-full px-4 pt-10"
                     >
-                        <img src={Anketa} alt="Анкета" className="w-[180px] h-auto"/>
+                        <img src={Anketa} alt="Анкета" className="w-[250px] h-auto"/>
                         <form
                             action="https://formspree.io/f/mojjwnjw"
                             method="POST"
