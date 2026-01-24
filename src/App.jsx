@@ -13,10 +13,10 @@ import Anketa from './assets/text-image/anketa.svg'
 import HeartWebp from './assets/heart.webp';
 import Dress1 from './assets/dress/1.webp';
 import Dress2 from './assets/dress/2.webp';
-import Dress3 from './assets/dress/3.webp';
-import Dress4 from './assets/dress/4.webp';
+import Dress3 from './assets/dress/3.png';
+import Dress4 from './assets/dress/4.jpg';
 import Dress5 from './assets/dress/5.webp';
-import Dress6 from './assets/dress/6.webp';
+import Dress6 from './assets/dress/6.jpg';
 import Main from './assets/main.jpg';
 import './App.css';
 import MusicPlayer from "./components/MusicPlayer.tsx";
@@ -176,10 +176,10 @@ function App() {
                         className="space-y-8 w-full flex flex-col items-center"
                     >
                         <img className='w-[250px]' src={Dress} alt="Dress Code"/>
-                        <p className="text-base px-4">Поддержите нас красивыми нарядами в палитре торжества:</p>
+                        <p className="text-base px-4">По желанию поддержите нас красивыми нарядами в палитре торжества</p>
 
                         <div className='flex -space-x-4 justify-center'>
-                            {['#464040', '#E0CDBB', '#BFB7AF', '#C0D8E8', '#202539'].map((color, i) => (
+                            {['#D4CEC8', '#C4C6B3', '#43453B', '#96816A', '#765542'].map((color, i) => (
                                 <motion.div
                                     key={i}
                                     initial={{scale: 0}}
