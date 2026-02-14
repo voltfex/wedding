@@ -30,9 +30,23 @@ const fadeInUp = {
     }
 };
 
+const COOLDOWN_MINUTES = 5;
+const FORMSPREE_URL = 'https://formspree.io/f/mojjwnjw';
+
 function App() {
     const papersRef = useRef(null);
+    const formRef = useRef(null);
     const [offset, setOffset] = useState(0);
+    const [cooldownSeconds, setCooldownSeconds] = useState(0);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
+
+    // Таймер обратного отсчёта после отправки
+    useEffect(() => {
+        if (cooldownSeconds <= 0) return;
+        const timer = setInterval(() => setCooldownSeconds((s) => s - 1), 1000);
+        return () => clearInterval(timer);
+    }, [cooldownSeconds]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -53,6 +67,29 @@ function App() {
 
     const leftTransform = offset < 0.6 ? 12 : Math.min((offset - 0.3) / 0.2, 1) * -100;
     const rightTransform = offset < 0.6 ? -12 : Math.min((offset - 0.3) / 0.2, 1) * 100;
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+        if (isSubmitting || cooldownSeconds > 0) return;
+        const form = e.target;
+        const formData = new FormData(form);
+        setIsSubmitting(true);
+        setSubmitSuccess(false);
+        try {
+            const res = await fetch(FORMSPREE_URL, {
+                method: 'POST',
+                body: formData,
+                headers: { Accept: 'application/json' },
+            });
+            if (res.ok) {
+                form.reset();
+                setSubmitSuccess(true);
+                setCooldownSeconds(COOLDOWN_MINUTES * 60);
+            }
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <div className="flex justify-center min-h-screen bg-[#FCF7EE] overflow-hidden text-[#464040]">
@@ -240,9 +277,17 @@ function App() {
                         className="flex flex-col items-center space-y-8 w-full px-4 pt-10"
                     >
                         <img src={Anketa} alt="Анкета" className="w-[250px] h-auto"/>
+                        {submitSuccess && (
+                            <p className="text-[#557153] text-sm font-medium">Анкета отправлена. Спасибо!</p>
+                        )}
+                        {cooldownSeconds > 0 && (
+                            <p className="text-sm opacity-70">
+                                Следующую анкету можно отправить через {Math.floor(cooldownSeconds / 60)}:{(cooldownSeconds % 60).toString().padStart(2, '0')}
+                            </p>
+                        )}
                         <form
-                            action="https://formspree.io/f/mojjwnjw"
-                            method="POST"
+                            ref={formRef}
+                            onSubmit={handleFormSubmit}
                             className="w-full space-y-10 text-left"
                         >
                             <div className="space-y-2">
@@ -296,11 +341,12 @@ function App() {
 
                             <div className="flex justify-center pt-4">
                                 <motion.button
-                                    whileTap={{scale: 0.95}}
+                                    whileTap={!(isSubmitting || cooldownSeconds > 0) ? { scale: 0.95 } : undefined}
                                     type="submit"
-                                    className="bg-[#557153] text-white px-12 py-3 rounded-md text-lg hover:bg-[#3d523b] transition-colors shadow-sm"
+                                    disabled={isSubmitting || cooldownSeconds > 0}
+                                    className="bg-[#557153] text-white px-12 py-3 rounded-md text-lg hover:bg-[#3d523b] transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#557153]"
                                 >
-                                    Отправить
+                                    {isSubmitting ? 'Отправка...' : cooldownSeconds > 0 ? 'Подождите' : 'Отправить'}
                                 </motion.button>
                             </div>
                         </form>
